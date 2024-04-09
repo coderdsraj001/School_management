@@ -1,0 +1,46 @@
+{% extends 'home/base.html' %}
+
+{% block content %}
+<h2 class="text-center mt-4">Student Record</h2>
+{% if request.user.is_superuser %}
+
+    <div class="container mt-4">
+        <table class="table table-striped table-bordered table-sm">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Student ID</th>
+                    <th>class</th>
+                    <th>Student Name</th>
+                    <th>Student Father Name</th>
+                    <th>Student Date of birth</th>
+                    <th>Student Documetns</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for student_with_file in students_with_file %}
+                <tr>
+                    <td>{{ student_with_file.student.id }}</td>
+                    <td>{{ student_with_file.student.clas }}</td>
+                    <td>{{ student_with_file.student.name }}</td>
+                    <td>{{ student_with_file.student.father_name }}</td>
+                    <td>{{ student_with_file.student.date_of_birth }}</td>
+                    <td>
+                    {% for file in student_with_file.files %}
+                        <a class="btn btn-secondary" href="/media/{{ file.file }}">{{ file.file }}</a>
+                    {% endfor %}
+                    </td>
+                    <td>
+                        <a href="/school/stu-edit/{{ student_with_file.student.id }}" class="btn btn-secondary">Edit</span></a>
+                        <a href="/school/stu-delete/{{ student_with_file.student.id }}" class="btn btn-danger">Delete</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <br>
+        <br>
+        <center><a href="/school/student" class="btn btn-primary">Add New Record</a></center>
+    </div>
+{% endif %}
+{% endblock %}

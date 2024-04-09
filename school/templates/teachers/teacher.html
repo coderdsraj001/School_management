@@ -1,0 +1,33 @@
+{% extends 'home/base.html' %}
+
+{% block content %}
+{% if request.user.is_superuser %}
+<h2 class="text-center mt-4">Teacher Record</h2>
+<div class="container mt-4">
+    <table class="table table-striped table-bordered table-sm">
+        <thead class="thead-dark">
+            <tr>
+                <th>Teacher ID</th>
+                <th>Teacher Name</th>
+                <th>Class</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for teacher_with_classes in teachers_with_classes %}
+                <tr>
+                    <td>{{ teacher_with_classes.teacher.id }}</td>
+                    <td>{{ teacher_with_classes.teacher.first_name }} {{ teacher_with_classes.teacher.last_name }}</td>
+                    <td>            
+                        {% for class in teacher_with_classes.classes %}
+                        <li>{{ class.name }}</li>
+                        {% endfor %}
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <br>
+    <br>
+</div>
+{% endif %}
+{% endblock %}
